@@ -1,2 +1,8 @@
 # Notebook
-重点知识摘要
+
+- C
+- Cpp
+- Python
+- Linux
+- Jetbot
+- 线性代数
