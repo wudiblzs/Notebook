@@ -23,6 +23,7 @@ numpy库常用的创建数组（ndarray类型）的函数共有7个。
 | np.random.rand(m, n)           | 创建一个m行n列的随机数组                    |
 | np.one(m, n, dtype)            | 创建一个m行n列全为1的数组， dtype是数据类型 |
 | np.empty(m, n, dtype)          | 创建一个m行n列全为0的数组， dtype是数据类型 |
+| np.eye(m, n， dtype=<class 'float'>)  | 创建一个m行n列的单位矩阵， dtype是数据类型 |
 
 ### 常用属性
 
