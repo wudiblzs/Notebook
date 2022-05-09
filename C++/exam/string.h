@@ -9,8 +9,8 @@ public:
     String(const char* cstr = 0);                       // 构造函数
     String(const String& str);                          // 拷贝构造函数
     String& operator=(const String& str);               // 重载赋值运算符、拷贝赋值
-    ~String();  
-    char* get_c_str() const { return m_data; }                                                  // 析构函数
+    ~String();                                          // 析构函数
+    char* get_c_str() const { return m_data; }                                               
 };
 
 inline
