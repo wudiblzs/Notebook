@@ -1,6 +1,5 @@
 1.临时换源：
 
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
 ```
  #清华源
@@ -13,11 +12,8 @@ pip install markdown -i http://mirrors.cloud.tencent.com/pypi/simple
 pip install markdown -i http://pypi.douban.com/simple/
 ```
 
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
 2.永久换源：
-
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
 ```
 # 清华源
