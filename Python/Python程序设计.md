@@ -1825,22 +1825,28 @@ print(demo('b'))
 
 # 文件操作
 
-文本文件：文本文件存储的是常规字符串，由若干文本行组成，通常每行以换行符`‘\n’`结尾。常规字符串是指记事本或其它文本编辑器能正常显示、编辑并且人类能够直接阅读和理解的字符串。
+**文本文件**：文本文件存储的是常规字符串，由若干文本行组成，通常每行以换行符`‘\n’`结尾。常规字符串是指记事本或其它文本编辑器能正常显示、编辑并且人类能够直接阅读和理解的字符串。
 
-二进制文本：二进制文本把对象内容以字节串进行存储，无法用文本编辑器软件直接进行编辑，通常也无法被人类直接阅读和理解，需要使用专门的软件进行解码后读取、显示、修改或执行。
+**二进制文本**：二进制文本把对象内容以字节串进行存储，无法用文本编辑器软件直接进行编辑，通常也无法被人类直接阅读和理解，需要使用专门的软件进行解码后读取、显示、修改或执行。
 
 ## 文件对象
 
-Python通过打开文件并创建文件对象对文件内容进行读取、写入、删除、修改等操作，最后关闭并保存文件内容。Python内置了文件对象，通过`open()`函数即可以指定模式打开指定文件并创建文件对象。
+Python通过打开文件并创建文件对象对文件内容进行读取、写入、删除、修改等操作，最后关闭并保存文件内容。Python内置了文件对象，通过`open()`函数即可以指定模式打开指定文件并创建文件对象,语法为：
 
 ```python
-open(file, mode = 'rt', buffering = -1, encoding = None, errors = None, newline = None, closefd = True, opener = None)
+open(file, mode = 'rt', buffering = -1, encoding = None, errors = None, newline = None, closefd = True, opener = None) as fp:
 ```
 
 - `file`指定了被打开的文件名称，如果打开的文件不在当前目录，还需指定完整路径，可以使用原始字符串。
 - `mode`指定了打开文件后的处理方式
 - `buffering`指定了读写文件的缓存模式，数值0代表不缓存，数值1表示缓存，如大于1则表示缓冲区的大小，默认值-1表示系统管理缓存。
 - 如果执行正常，`open()`函数返回一个文件对象，通过该文件对象可以对文件进行各种操作，如果指定文件不存在、访问权限不够、磁盘空间不够或其它原因导致创建文件对象失败则抛出异常。
+
+当对文件内容操作完以后，一定要关闭文件，以保证所做的任何修改都得到保存。
+
+```python
+fp.close()
+```
 
 
 
@@ -1856,32 +1862,40 @@ open(file, mode = 'rt', buffering = -1, encoding = None, errors = None, newline 
 | ‘t’            | 文本文件模式                                                |
 | ‘+’            | 读写模式（可与其他模式组合使用）                            |
 
+**文件对象常用属性**
+
+| 属性   | 说明                                       |
+| ------ | ------------------------------------------ |
+| closed | 判断文件是否关闭，若文件被关闭，则返回True |
+| mode   | 返回文件的打开模式                         |
+| name   | 返回文件的名称                             |
+
 **文件对象常用方法**
 
 | 方法                   | 功能说明                                                     |
 | ---------------------- | ------------------------------------------------------------ |
 | flush()                | 把缓冲区的内容写入文件，但不关闭文件                         |
 | close()                | 把缓冲区的内容写入文件，同时关闭文件，并释放文件对象         |
-| read([size])           | 从文件中读取size字节（二进制文件）或字符（文本文件）的内容作为结果返回，如果省略size，则表示一次性读取所有作为结果 |
+| read([size])           | 从文件中读取`size`字节（二进制文件）或字符（文本文件）的内容作为结果返回，如果省略`size`，则表示一次性读取所有作为结果 |
 | readline()             | 从文件中读取一行内容作为结果返回                             |
 | readlines()            | 把文本文件中的每行文本作为一个字符串存入列表中，返回该列表   |
-| seek(offset[, whence]) | 把文件指针移到新的位置，offset表示相对于whence的偏移量，单位是字节。whence为0表示从文件头开始计算，1表示从当前位置开始计算，2表示从文件 |
+| seek(offset[, whence]) | 把文件指针移到新的位置，`offset`表示相对于`whence`的偏移量，单位是字节。`whence`为0表示从文件头开始计算，1表示从当前位置开始计算，2表示从文件 |
 | tell()                 | 返回文件指针的当前位置，单位是字节                           |
-| truncate([size])       | 删除当前指针位置到文件末尾的内容。如果指定了size，则不论指针在什么位置都只留下前size字节，其余的删除 |
-| write(s)               | 把s的内容写入文件                                            |
+| truncate([size])       | 删除当前指针位置到文件末尾的内容。如果指定了`size`，则不论指针在什么位置都只留下前`size`字节，其余的删除 |
+| write(s)               | 把`s`的内容写入文件                                          |
 | writelines(s)          | 把列表中的字符串逐个写入文本文件，不添加换行                 |
-
-
 
 ## Few Examples
 
 1. 向文本文件中写入内容
 
 ```python
-str = '文本文件的读取方法\n文本文件的写入方法\n'
+s = '文本文件的读取方法\n文本文件的写入方法\n'
 with open('sample.txt', 'at+') as f:
     f.write(s)
 ```
+
+使用上下文管理关键字`with`可以自动管理资源，不论何种原因跳出`with`块，总能保证文件被正确关闭，并且可以在代码块执行完毕后自动还原进入该代码块时的现场。
 
 2. 读取并显示文本文件的前n个字符
 
@@ -1911,11 +1925,30 @@ with open('data_asc.txt', 'wt') as fp:
     fp.writelines(data)
 ```
 
+5. 批量修改文本文件编码格式为UTF-8。
+
+```python
+from os import listdir
+from chardet import datect							# 扩展库，需要先安装
+
+fns = (fn for in listdir() if fn.endswith('.txt'))
+for fn in fns:
+    with open(fn, 'rb+') as fp:
+        content = fp.read()
+        #判断编码格式
+        encoding = detect(content)['encoding']
+        #格式转换
+        content = content.decode(encoding).encode('utf-8')
+        #写回文件
+        fp.seek(0)
+        fp.write(content)
+```
 
 
-## 文件级操作
 
-序列化：简单地讲就是把Python对象在不丢失其类型信息地情况下转成二进制形式的过程。，对象序列化后的字节串经过正确的反序列化过程应该能准确无误地恢复为原来的对象。
+## 二进制文件操作
+
+序列化：简单地讲就是把Python对象在不丢失其类型信息地情况下转成二进制形式的过程。对象序列化后的字节串经过正确的反序列化过程应该能准确无误地恢复为原来的对象。
 
 Python中常用的序列化模块有`struct`、`pickle`、`json`、`marshal`和`shelve`。
 
@@ -1933,17 +1966,72 @@ lst = [[1, 2, 3], [4, 5, 6], [7, 8,  9]]
 tu = (-5, 10 ,4)
 coll = {4, 5, 6}
 dic = {'a':'apple', 'b':'banana', 'g':'grape', 'o':'orange'}
-dat
+data = [i, a, s, lst, tu, coll, dic]
+
+with open('sample_pickle.dat', 'wb') as f:
+    try:
+        pickle.dump(len(data), f)		     #表示后面将要写入的数据个数
+        for item in data:
+            pickle.dumb(item, f)
+    except:
+        print("写入文件异常！")				#如果写文件异常则跳到此处执行
+```
+
+2. 读取写入二进制文件的内容
+
+```python
+import pickle
+
+with open('sample_pickle.dat', 'rb') as f:
+    n = pickle.load(f)							#读出文件的数据个数
+    for i in range(n):
+        x = pickle.load(f)
+        print(x)
 ```
 
 
 
-## 目录操作
+### struct模块
+
+1. 使用struct模块写入二进制文件
+
+```python
+import struct
+
+n = 130000000
+x = 96.45
+b = True
+s = 'sl@中国'
+sn = struct.pack('if?', n, x, b)				#序列化
+with open('sample_struct.dat', 'wb') as fp:
+    fp.write(sn)								#写入字符串
+    fp.write(s.encode())						#字符串直接编码为字节串写入
+```
+
+2. 使用struct模块读取写入二进制文件的内容
+
+```python
+import struct
+
+with open('sample_struct.dat', 'rb') as fp:
+    sn = fp.read(9)				#整数，实数各占4字节，逻辑值占1字节
+    tu = struct.unpack('if?', sn)
+    n, x, bl = tu 
+    print('n=', n, 'x=', x, 'bl=', bl)
+    s = fp.read(9).decode()		#UTF-8编码，英文字符占1个字节，汉字占3字节
+    print('s=', s)
+```
 
 
 
 
 
+## 文件级操作
 
+
+
+
+
+   
 
  
