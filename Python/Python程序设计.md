@@ -2030,8 +2030,58 @@ with open('sample_struct.dat', 'rb') as fp:
 
 
 
+### os与os.path模块
 
+os模块常用文件操作函数
+
+| 函数                                                        | 功能说明                       |
+| ----------------------------------------------------------- | ------------------------------ |
+| chmod(path, mode, *, dir_fd = None, follow_symlinks = True) | 改变文件的访问权限             |
+| remove(path)                                                | 删除指定的文件                 |
+| rename(src, dst)                                            | 重命名文件或目录               |
+| stat(path)                                                  | 返回文件的所有属性             |
+| listdir(path)                                               | 返回path目录下的文件和目录列表 |
+| startfile(filepath[, operation])                            | 使用关联的应用程序打开指定文件 |
+
+os.path模块常用文件操作函数
+
+| 函数 | 功能说明 |
+| ---- | -------- |
+| basename(p)        | 返回路劲中最后一个分隔符后面的部分 |
+| dirname(p)         | 返回路劲中最后一个分隔符前面的部分 |
+| exists(path)       | 判断路径是否存在                   |
+| getatime(filename) | 返回文件的最后访问时间             |
+| getctime(filename) | 返回文件的创建时间                 |
+| getmtime(filename) | 返回文件的最后修改时间             |
+| getsize(filename)  | 返回文件的大小                     |
+| isabs(path)        | 判断path是否为绝对路径             |
+| isdir(path)        | 判断path是否为目录                 |
+| isfile(path)       | 判断path是否为文件                 |
+| join(path, *paths) | 连接两个或多个path                 |
+| split(path)        | 对路径进行分割，返回元组           |
+| splitext(path)     | 从路径中分割文件的扩展名，返回元组 |
+| splitdrive(path)   | 从路径中分割驱动器的名称，返回元组 |
+
+示例
+
+```python
+import os
+
+file_list = [filename for filename in os.listdir() if filename.endswith('.html')]
+for filename in file_list:
+    newname = file[:-4] + 'htm'
+    os.rename(filename, newname)
+    print(filename + "更名为：" + newname)
+```
 
    
+
+
+
+## 目录操作
+
+
+
+
 
  
