@@ -2080,7 +2080,57 @@ for filename in file_list:
 
 ## 目录操作
 
+os模块常用目录操作函数与成员
 
+| 成员                                  | 功能说明                                                     |
+| ------------------------------------- | ------------------------------------------------------------ |
+| mkdir(path[, mode=0o777])             | 创建目录                                                     |
+| makedirs(path1/path2..., mode=511)    | 创建多级目录，十进制511与八进制0o777相等                     |
+| rmdir(path)                           | 删除目录                                                     |
+| removedirs(path1/path2...)            | 删除多级目录                                                 |
+| listdir(path)                         | 返回指定目录下的文件和目录信息                               |
+| getcwd()                              | 返回当前工作目录                                             |
+| get_exec_path()                       | 返回可执行文件的搜索路径                                     |
+| chdir(path)                           | 把path设为当前工作目录                                       |
+| walk(top, topdown=True, onerror=None) | 遍历目录树，该函数返回一个元组，包括3个元素：所有路径名、所有目录树列表与文件列表 |
+| sep                                   | 当前操作系统所使用的路径分隔符                               |
+| extsep                                | 当前操作系统所使用的文件扩展名分割符                         |
+
+示例：遍历指定目录下所有子目录和文件
+
+```python
+import os
+
+def visitDir(path):
+    '''使用递归的方法进行深度优先遍历'''
+    if not os.path.isdir(path):
+        print('Error:', path, ' is not a directory or does not exist.')
+        return
+    for lists in os.listdir(path):
+        sub_path = os.path.join(path, lists)
+        print(sub_path)
+        if os.path.isdir(sub_path):
+            visitDir(sub_path)
+
+def listDirWidthFirst(directory):
+    '''使用广度优先的目录树遍历'''
+    dirs = [directory]
+    #如果还没有没遍历的文件夹，继续循环
+    while dirs:
+        #遍历还没遍历过的第一项
+        current = dirs.pop(0)
+        #遍历该文件，如果是文件就直接输出显示
+        #如果是文件夹，输出显示后，标记为待遍历项
+        for sub_path in os.listdir(current):
+            path = os.path.join(current, sub_path)
+            if os.path.isfile(path):
+                print(path)
+            elif os.path.isdir(path):
+                print(path)
+                dirs.append(path)
+
+
+```
 
 
 
