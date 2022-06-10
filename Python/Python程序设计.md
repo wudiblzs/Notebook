@@ -2101,7 +2101,7 @@ os模块常用目录操作函数与成员
 ```python
 import os
 
-def visitDir(path):
+def visit_dir(path):
     '''使用递归的方法进行深度优先遍历'''
     if not os.path.isdir(path):
         print('Error:', path, ' is not a directory or does not exist.')
@@ -2110,9 +2110,9 @@ def visitDir(path):
         sub_path = os.path.join(path, lists)
         print(sub_path)
         if os.path.isdir(sub_path):
-            visitDir(sub_path)
+            visit_dir(sub_path)
 
-def listDirWidthFirst(directory):
+def list_dir_width(directory):
     '''使用广度优先的目录树遍历'''
     dirs = [directory]
     #如果还没有没遍历的文件夹，继续循环
@@ -2129,9 +2129,43 @@ def listDirWidthFirst(directory):
                 print(path)
                 dirs.append(path)
 
-
+def visit_dir_walk(path):
+    if not os.path.isdir(path):
+        print('Error:', path, ' is not a directory or does not exist.')
+        return
+    list_dirs = os.walk(path)
+    #遍历该元组的目录和文件信息
+    for root, dirs, files in list_dirs:
+        for d in dirs:
+            #获取完整路径
+            print(os.path.join(root, d))
+        for f in files:
+            #获取绝对路径
+            print(os.path.join(root, f))
 ```
 
+示例：使用xlwt模块写入Excel文件
 
+```python
+     book = xlwt.Workbook()
+     sheet1 = book.add_sheet("First")
+     al = xlwt.Alignment()
+     #对齐方式
+     al.horz = xlwt.Alignment.HORZ_CENTER
+     al.vert = xlwt.Alignment.VERT_CENTER
+     
+     borders = xlwt.Borders()
+     #边框样式
+     borders.bottom = xlwt.Borders.THICK
+     
+     style = xlwt.XFStyle()
+     style.alignment = al
+     style.borders = borders
+     
+     row0 = sheet1.row(0)
+     row0.write(0, 'test', style = style)
+     book.save(r'/home/supeng/Program/py/test.xls') 
+```
 
- 
+ 示例：使用xlrd模块读取Excel文件
+
